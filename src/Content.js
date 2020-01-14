@@ -35,12 +35,12 @@ class Content extends React.Component {
     body() {
         return <Card.Body>
             <Row>
-                <Col class={"col m-6"}>
+                <Col style={{padding:"40px"}}>
                     {this.props.children}
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col class={"col p-55"}>
                     <Button>Start earning money</Button>
                 </Col>
                 <Col>
