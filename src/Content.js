@@ -23,11 +23,10 @@ class Content extends React.Component {
         return <Card.Header>
             <div className="jumbotron">
                 <h1 className="display-4">AlphaTrader</h1>
-                <p>
-                    This is a simple application, which predicts your stock market data. The market is predicted by
-                    using a
-                    deep neural network trained with Keras in Python on NASDAQ, DOW30, S&P 500
-                </p>
+                <h2>
+                    A simple application, which predicts your stock market data from YahoohFinance.<br/> The market is predicted by using a
+                    deep neural network trained with Keras in Python on NASDAQ, DOW30, S&P 500.
+                </h2>
             </div>
         </Card.Header>;
     }

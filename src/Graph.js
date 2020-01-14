@@ -1,7 +1,7 @@
 import React from "react";
 import Chart from "chart.js"
 
-class Graph extends React.Component{
+class Graph extends React.Component {
     constructor(props) {
         super(props);
         this.chartRef = React.createRef();
@@ -15,15 +15,22 @@ class Graph extends React.Component{
                 datasets: [{
                     label: this.props.title,
                     data: this.props.data.map(d => d.value),
-                    backgroundColor: this.props.color
+                    backgroundColor: this.props.color,
                 }]
+            },
+            options: {
+                elements: {
+                    line: {
+                        tension: 0.05
+                    }
+                }
             }
         });
     }
 
     render() {
         return (
-            <canvas ref={this.chartRef} />
+            <canvas ref={this.chartRef}/>
         );
     }
 }

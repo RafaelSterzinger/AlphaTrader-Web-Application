@@ -17,6 +17,10 @@ function App() {
                     {
                         "name": "B",
                         "value": 87
+                    },
+                    {
+                        "name": "B",
+                        "value": 66
                     }
                 ]} title={"Your stoinks"} color={"#70CAD1"}/>
             </Content>
