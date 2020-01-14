@@ -34,7 +34,11 @@ class Content extends React.Component {
 
     body() {
         return <Card.Body>
-            {this.props.children}
+            <Row>
+                <Col class={"col m-6"}>
+                    {this.props.children}
+                </Col>
+            </Row>
             <Row>
                 <Col>
                     <Button>Start earning money</Button>

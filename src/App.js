@@ -9,7 +9,16 @@ function App() {
     return (
         <div>
             <Content>
-                <Graph/>
+                <Graph data={[
+                    {
+                        "name": "A",
+                        "value": 46
+                    },
+                    {
+                        "name": "B",
+                        "value": 87
+                    }
+                ]} title={"Your stoinks"} color={"#70CAD1"}/>
             </Content>
         </div>
     );
