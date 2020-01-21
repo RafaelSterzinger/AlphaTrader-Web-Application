@@ -7,21 +7,21 @@ class Graph extends React.Component {
         this.chartRef = React.createRef();
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         this.chartRef = new Chart(this.chartRef.current, {
             type: 'line',
             data: {
-                labels: this.props.data.map(d => d.label),
+                labels: this.props.data.map(d => d.Date),
                 datasets: [{
                     label: this.props.title,
-                    data: this.props.data.map(d => d.value),
+                    data: this.props.data.map(d => d.Adj_Close),
                     backgroundColor: this.props.color,
                 }]
             },
             options: {
                 elements: {
                     line: {
-                        tension: 0.05
+                        tension: 0.0
                     }
                 }
             }

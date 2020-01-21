@@ -1,39 +1,39 @@
 import React from "react";
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import * as tf from '@tensorflow/tfjs-node';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Graph from "./Graph";
+import CSVReader from "react-csv-reader";
+
+export const sample = [
+    "Date",
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "Adj Close",
+    "Volume"
+];
 
 class Content extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            modelLoaded: false,
+            data: [],
         };
-    }
-
-    async componentDidMount() {
-
-        this.model = await tf.loadLayersModel();
-        this.setState({
-            modelLoaded: true
-        });
     }
 
     render() {
         return (
-            this.state.modelLoaded ?
-                <p>model is loading!</p>
-                :
-                <Row className="justify-content-center col-12">
-                    <Card className="text-center">
-                        {this.header()}
-                        {this.body()}
-                        {this.footer()}
-                    </Card>
-                </Row>
+            <Row className="justify-content-center col-12">
+                <Card className="text-center">
+                    {this.header()}
+                    {this.body()}
+                    {this.footer()}
+                </Card>
+            </Row>
         );
     }
 
@@ -54,15 +54,15 @@ class Content extends React.Component {
         return <Card.Body>
             <Row>
                 <Col style={{padding: "40px"}}>
-                    {this.props.children}
+                    <Graph data={this.state.data} title={"Your Yahoo Finance Data"} color={"#70CAD1"}/>
                 </Col>
             </Row>
             <Row>
-                <Col class={"col p-55"}>
-                    <Button>Start earning money</Button>
+                <Col className={"col p-55"}>
+                    <Button>Earn €€€</Button>
                 </Col>
                 <Col>
-                    <input type="file" className="form-control-file" id="exampleFormControlFile1"/>
+                    <CSVReader onFileLoaded={data => this.prepareData(data)}/>
                 </Col>
             </Row>
         </Card.Body>;
@@ -71,6 +71,39 @@ class Content extends React.Component {
     footer() {
         return <Card.Footer className="text-muted">Application build by Rafael Sterzinger for the lecture <em>Applied
             Deep Learning</em>, WS 2019</Card.Footer>;
+    }
+
+    prepareData(data) {
+        if (data[0].length !== sample.length) {
+            alert("Wrong format! Please download your data from https://finance.yahoo.com/");
+            return;
+        }
+
+        for (let i = 0; i < data[0].length; i++) {
+            if (data[0][i] !== sample[i]) {
+                alert("Wrong format! Please download your data from https://finance.yahoo.com/");
+                return;
+            }
+        }
+
+
+        try {
+            let temp = [];
+            for (let i = 1; i < data.length; i++) {
+                temp[i-1] = {
+                    Date: data[i][0],
+                    Open: data[i][1],
+                    High: data[i][2],
+                    Low: data[i][3],
+                    Close: data[i][4],
+                    Adj_Close: data[i][5],
+                    Volume: data[i][6]
+                }
+            }
+            this.setState({data: temp})
+        } catch (e) {
+            alert("Wrong format! Could not parse your CSV")
+        }
     }
 }
 
