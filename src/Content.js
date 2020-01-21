@@ -3,19 +3,37 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import * as tf from '@tensorflow/tfjs-node';
 
 class Content extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            modelLoaded: false,
+        };
+    }
+
+    async componentDidMount() {
+
+        this.model = await tf.loadLayersModel();
+        this.setState({
+            modelLoaded: true
+        });
+    }
 
     render() {
         return (
-            <Row className="justify-content-center">
-                <Card className="text-center">
-                    {this.header()}
-                    {this.body()}
-                    {this.footer()}
-                </Card>
-            </Row>
+            this.state.modelLoaded ?
+                <p>model is loading!</p>
+                :
+                <Row className="justify-content-center col-12">
+                    <Card className="text-center">
+                        {this.header()}
+                        {this.body()}
+                        {this.footer()}
+                    </Card>
+                </Row>
         );
     }
 
@@ -24,7 +42,8 @@ class Content extends React.Component {
             <div className="jumbotron">
                 <h1 className="display-4">AlphaTrader</h1>
                 <h2>
-                    A simple application, which predicts your stock market data from YahoohFinance.<br/> The market is predicted by using a
+                    A simple application, which predicts your stock market data from YahoohFinance.<br/> The market is
+                    predicted by using a
                     deep neural network trained with Keras in Python on NASDAQ, DOW30, S&P 500.
                 </h2>
             </div>
@@ -34,7 +53,7 @@ class Content extends React.Component {
     body() {
         return <Card.Body>
             <Row>
-                <Col style={{padding:"40px"}}>
+                <Col style={{padding: "40px"}}>
                     {this.props.children}
                 </Col>
             </Row>
