@@ -2,7 +2,8 @@ This project is a complementary web-application to the Applied-Deep-Learning prj
 
 To start the web-application run the following commands in your directory:
 
-### 'npm install'
+### `npm install`
+
 ### `npm start`
 
 Afterwards the website ist hostet on **localhost:3000**
