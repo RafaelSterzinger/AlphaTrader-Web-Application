@@ -1,4 +1,4 @@
-This project is a complementary web-application to the Applied-Deep-Learning prject
+This project is a complementary web-application to the Applied-Deep-Learning project.
 
 To start the web-application run the following commands in your directory:
 
@@ -6,7 +6,7 @@ To start the web-application run the following commands in your directory:
 
 ### `npm start`
 
-Afterwards the website ist hostet on **localhost:3000**
+Afterwards the website will be hosted at **localhost:3000**.
 
-To use the trained model to predict your stock data, run the server.py file from the Applied-Deep-Learning project.
+To use the trained model to predict your stock data, execute the **server.py** file from the Applied-Deep-Learning project to start the backend.
 
