@@ -7,8 +7,14 @@ class Graph extends React.Component {
         this.chartRef = React.createRef();
     }
 
-    componentDidUpdate() {
-        this.chartRef = new Chart(this.chartRef.current, {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.chart.data.labels = this.props.data.map(d=> d.Date);
+        this.chart.data.datasets[0].data = this.props.data.map(d => d.Close);
+        this.chart.update();
+    }
+
+    componentDidMount() {
+        this.chart = new Chart(this.chartRef.current, {
             type: 'line',
             data: {
                 labels: this.props.data.map(d => d.Date),

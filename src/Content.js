@@ -22,7 +22,8 @@ class Content extends React.Component {
         super(props);
         this.state = {
             data: [],
-            raw: null
+            raw: null,
+            profit: 1000
         };
     }
 
@@ -47,6 +48,8 @@ class Content extends React.Component {
                     predicted by using a
                     deep neural network trained with Keras in Python on NASDAQ, DOW30, S&P 500.
                 </h2>
+                <br/>
+                <h3>{"Your current balance is € " + this.state.profit}</h3>
             </div>
         </Card.Header>;
     }
@@ -55,13 +58,14 @@ class Content extends React.Component {
         return <Card.Body>
             <Row>
                 <Col style={{padding: "40px"}}>
-                    <Graph data={this.state.data} title={"Your Yahoo Finance Data"} color={"#70CAD1"}/>
+                    {this.state.data.length !== 0 ?
+                        <Graph data={this.state.data} title={"Your Yahoo Finance Data"} color={"#70CAD1"}/> : null}
                 </Col>
             </Row>
             <Row>
                 <Col className={"col p-55"}>
                     <Button variant={"success"} disabled={this.state.data.length === 0}
-                            onClick={this.state.data.length !== 0 ? this.getPrediction() : null}>Earn €€€</Button>
+                            onClick={() => this.getPrediction()}>Earn €€€</Button>
                 </Col>
                 <Col>
                     <CSVReader onFileLoaded={data => this.prepareData(data)}/>
@@ -116,7 +120,7 @@ class Content extends React.Component {
                 'Access-Control-Allow-Origin': 'http://localhost:5000/'
             },
             body: JSON.stringify(this.state.raw)
-        }).then(response => response.json()).then(data => this.setState({profit:data.profit, ticks: data.ticks}));
+        }).then(response => response.json()).then(data => this.setState({profit: this.state.profit*data.profit.toFixed(2), ticks: data.ticks}));
     }
 
 }
