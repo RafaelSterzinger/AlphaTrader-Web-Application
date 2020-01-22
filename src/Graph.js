@@ -8,8 +8,11 @@ class Graph extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.chart.data.labels = this.props.data.map(d=> d.Date);
+        this.chart.data.labels = this.props.data.map(d => d.Date);
         this.chart.data.datasets[0].data = this.props.data.map(d => d.Close);
+        if (this.props.ticks) {
+            this.colorChart()
+        }
         this.chart.update();
     }
 
@@ -21,7 +24,7 @@ class Graph extends React.Component {
                 datasets: [{
                     label: this.props.title,
                     data: this.props.data.map(d => d.Close),
-                    backgroundColor: this.props.color,
+                    backgroundColor: this.props.color
                 }]
             },
             options: {
@@ -38,6 +41,18 @@ class Graph extends React.Component {
         return (
             <canvas ref={this.chartRef}/>
         );
+    }
+
+    colorChart() {
+        let color = [];
+        for (let i = 0; i < this.chart.data.datasets[0].data.length; i++) {
+            if (i < 31) {
+                color[i] = 'black'
+            } else {
+                color[i] = this.props.ticks[i-31] === 0 ? "#ff0000" : '#00ff00';
+            }
+        }
+        this.chart.data.datasets[0].backgroundColor = color;
     }
 }
 

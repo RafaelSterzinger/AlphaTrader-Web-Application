@@ -59,7 +59,7 @@ class Content extends React.Component {
             <Row>
                 <Col style={{padding: "40px"}}>
                     {this.state.data.length !== 0 ?
-                        <Graph data={this.state.data} title={"Your Yahoo Finance Data"} color={"#70CAD1"}/> : null}
+                        <Graph data={this.state.data} ticks={this.state.ticks} title={"Your Yahoo Finance Data"} color={"black"}/> : null}
                 </Col>
             </Row>
             <Row>
@@ -92,6 +92,11 @@ class Content extends React.Component {
             }
         }
 
+        if (data.length<31){
+            alert("Your dataset is too small!");
+            return;
+        }
+
         try {
             let temp = [];
             for (let i = 1; i < data.length; i++) {
@@ -122,7 +127,6 @@ class Content extends React.Component {
             body: JSON.stringify(this.state.raw)
         }).then(response => response.json()).then(data => this.setState({profit: this.state.profit*data.profit.toFixed(2), ticks: data.ticks}));
     }
-
 }
 
 export default Content;
