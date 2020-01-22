@@ -17,5 +17,5 @@ To start the web-application with docker, run the following command in your dire
 
 Afterwards the website will be hosted at **localhost:3000**.
 
-To use the trained model to predict your stock data, execute the **server.py** file from the Applied-Deep-Learning project to start the backend.
+To use the trained model to predict your stock data, execute the [**server.py**](https://github.com/RafaelSterzinger/Applied-Deep-Learning) file from the Applied-Deep-Learning project to start the backend.
 
