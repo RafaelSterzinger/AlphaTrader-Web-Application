@@ -22,6 +22,7 @@ class Content extends React.Component {
         super(props);
         this.state = {
             data: [],
+            raw: null
         };
     }
 
@@ -59,7 +60,8 @@ class Content extends React.Component {
             </Row>
             <Row>
                 <Col className={"col p-55"}>
-                    <Button>Earn €€€</Button>
+                    <Button variant={"success"} disabled={this.state.data.length === 0}
+                            onClick={this.state.data.length !== 0 ? this.getPrediction() : null}>Earn €€€</Button>
                 </Col>
                 <Col>
                     <CSVReader onFileLoaded={data => this.prepareData(data)}/>
@@ -86,11 +88,10 @@ class Content extends React.Component {
             }
         }
 
-
         try {
             let temp = [];
             for (let i = 1; i < data.length; i++) {
-                temp[i-1] = {
+                temp[i - 1] = {
                     Date: data[i][0],
                     Open: data[i][1],
                     High: data[i][2],
@@ -100,11 +101,24 @@ class Content extends React.Component {
                     Volume: data[i][6]
                 }
             }
-            this.setState({data: temp})
+            this.setState({data: temp, raw: data})
         } catch (e) {
             alert("Wrong format! Could not parse your CSV")
         }
     }
+
+    getPrediction() {
+        fetch('http://localhost:5000/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:5000/'
+            },
+            body: JSON.stringify(this.state.raw)
+        }).then(response => response.json()).then(data => this.setState({profit:data.profit, ticks: data.ticks}));
+    }
+
 }
 
 export default Content;

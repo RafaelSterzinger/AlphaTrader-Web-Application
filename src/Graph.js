@@ -14,7 +14,7 @@ class Graph extends React.Component {
                 labels: this.props.data.map(d => d.Date),
                 datasets: [{
                     label: this.props.title,
-                    data: this.props.data.map(d => d.Adj_Close),
+                    data: this.props.data.map(d => d.Close),
                     backgroundColor: this.props.color,
                 }]
             },
